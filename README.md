@@ -1,46 +1,64 @@
-# System Risk & Concurrent Failure Model: A Technical Case Study
+# Probabilistic Risk Assessment Tool: A Technical Case Study
 
 > **Disclaimer:** The source code, specific algorithms, and datasets for this project are proprietary and confidential to a previous employer. This repository serves strictly as a technical whitepaper outlining the architecture, challenges, and methodologies used to solve a complex computational problem.
 
 ## 📊 Executive Summary
-In large-scale industrial systems, the failure of a single component is often manageable. However, the concurrent failure of multiple independent units can lead to cascading operational bottlenecks and severe commercial risk. 
+This project features a Probabilistic Risk Assessment (PRA) tool that calculates the probability of system shortfall by analyzing Demand-Capacity interference. The model evaluates the mathematical intersection between the probability density functions (PDFs) of market gas demand and the pipeline network system’s flow capability. When these two distributions overlap, an interference zone is created, representing the statistical probability that the applied market demand will exceed the system’s available capacity.
 
-The objective of this project was to architect a predictive software model capable of calculating the probability of simultaneous equipment failures across a massive, interconnected system. By simulating millions of potential failure states, the model provided stakeholders with data-driven insights to optimize maintenance schedules and mitigate financial exposure.
+In a large industrial network (such as a major natural gas pipeline or a multi-node data center), the isolated failure of a major equipment unit—like a compressor or a server rack—will have minimal impact on overall system capacity if the network is engineered with sufficient backup redundancy. However, the concurrent failure of multiple independent units with specific system quirks or unevenly distributed capability, combined with peak market demand conditions, can lead to cascading operational bottlenecks and severe commercial shortfalls. 
+
+The primary objective of this project was to quantify system shortfall risk—specifically the probability of deficit and expected shortfall days per season—by modeling how near-future market demand distributions overlap with system capacity curves while accounting for random, multi-unit equipment failures. By replacing static, deterministic "worst-case scenario" assumptions with dynamic stochastic modeling, the tool provided executive decision-makers with a nuanced, data-driven risk matrix to rationalize increased contract flow levels across a major pipeline network.
 
 ## 🛠️ The Tech Stack
 * **Language:** Python
-* **Data Processing:** Pandas, NumPy
-* **Core Libraries:** `itertools`, `scipy.stats`
-* **Domain:** Combinatorial Optimization, Predictive Modeling, Data Pipelines
+* **Data Processing & Numerical Math:** Pandas, NumPy
+* **Scientific & Statistical Computing:** SciPy, OpenTURNS, `itertools`, `scipy.stats`
+* **Data Visualization:** Matplotlib, Seaborn
+* **Domain:** Probabilistic Risk Assessment (PRA), Combinatorial Optimization, Stochastic Modeling, Monte Carlo Simulations
 
 ## ⚙️ System Architecture & Approach
+Rather than a monolithic enterprise application, this tool was architected as a modular analytical pipeline composed of sequential Python scripts that processed enterprise data from initial ingestion through to stochastic simulation.
 
-### 1. Data Ingestion & Sanitization
-The pipeline began by ingesting and cleaning over 10,000 historical event logs. Missing values, formatting anomalies, and duplicate states were programmatically resolved using **Pandas** to establish a clean, reliable dataset representing the operational history of independent system nodes.
+### 1. Data Ingestion & Event Probability Mapping
+* The pipeline processed and cleaned multi-year historical compressor unit availability logs using **Pandas** to calculate binary equipment failure rates.
+* To model concurrent risk, Python's **`itertools`** library was utilized to algorithmically generate multi-unit simultaneous failure combinations. Evaluating up to 3 simultaneous outages across 30+ compressor units yielded an active sample space of 4,525 mutually exclusive outage events ($\binom{30}{1} + \binom{30}{2} + \binom{30}{3}$).
+* **NumPy** array operations were then applied to map joint event probabilities directly to their corresponding system capacity severity impacts.
 
-### 2. The Combinatorial Engine
-To calculate concurrent risk, the system needed to map every possible combination of failure states. Using Python's **`itertools`** library, I engineered an algorithmic generation engine that calculated the permutations of mutually exclusive outage events across distinct system units.
+### 2. Stochastic Distribution Fitting & Model Selection
+* Python scripts were developed to clean and fit continuous probability density functions (PDFs) to historical market demand datasets.
+* Hydraulically simulated flowrate results—representing the base capacity curve of the pipeline system generated via **Synergi Software**—were fitted with their own independent probability distributions.
+* Rigorous statistical goodness-of-fit testing was conducted using **Kolmogorov-Smirnov (KS) tests**, alongside **Akaike Information Criterion (AIC)** and **Bayesian Information Criterion (BIC)** in **SciPy** and **OpenTURNS**, to evaluate and select the optimal distributions.
 
-### 3. Algorithmic Filtering & Optimization
-Generating the sample space resulted in a massive data explosion—yielding over **33 million potential outcomes**. Iterating through a matrix of this size using standard loops would result in severe memory bottlenecks and unacceptable runtime.
+### 3. Multivariate Dependency Modeling via Copulas
+* In real-world industrial networks, market demand and system capacity often exhibit complex, non-linear dependencies (e.g., peak market demand in specific regions correlating with high system strain, or inverse relationships during seasonal transitions).
+* To accurately capture tail-dependence without falsely assuming linear correlation or statistical independence, the simulation engine integrated **copulas** to mathematically model the multivariate dependency structure between fluctuating market demand and base capacity curves.
 
+### 4. Monte Carlo Simulation Engine
+* The fitted base capacity distribution, market demand distribution, and combinatorial event probabilities were ingested into a multi-stage **Monte Carlo simulation** script.
+* During execution, calculated combinatorial outage probabilities dynamically shifted the base capacity distribution curve based on outage severity impact.
+* The engine executed thousands of simulation iterations to evaluate dynamic Demand-Capacity interference and quantify seasonal shortfall risk.
 
-
-To solve this, I designed a filtering algorithm that actively pruned the decision tree. By utilizing **NumPy** for vectorized operations and applying statistical thresholds, the program algorithmically discarded statistically insignificant failure scenarios in real-time. This reduced the active sample space from 33+ million outcomes down to only the most critical, high-probability failure paths.
-
-### 4. Probability Distribution Fitting
-The filtered data was then passed through mathematical models to fit probability distributions, allowing the system to assign accurate risk weights to specific concurrent failure scenarios based on historical uptime and failure rates.
+### 5. Risk Visualization & Executive Reporting
+* Simulation outputs were synthesized using **Matplotlib** and **Seaborn** to generate comprehensive statistical dashboards and risk distribution plots.
+* These visualizations translated complex mathematical interference zones and tail-risk scenarios into intuitive, actionable charts for non-technical corporate stakeholders.
 
 ## 🚧 Challenges Overcome
-* **The "Combinatorial Explosion":** The primary engineering challenge was memory management and computational efficiency. Scaling the model from 5 units to 25 units exponentially increased the state space. Optimizing the Python logic to process vectorized data arrays rather than iterative loops was critical to preventing system crashes and reducing query times.
-* **Data Integrity:** Real-world industrial data is inherently messy. Designing robust edge-case handling within the Pandas pipeline ensured that malformed historical inputs did not corrupt the predictive outputs.
+* **Legacy Codebase Refactoring & Scope Expansion:** A major engineering challenge involved deciphering and refactoring a predecessor’s legacy codebase while significantly expanding the architectural scope from single-unit evaluations to complex, multi-unit concurrent failure modeling.
+* **Data Granularity & SME Validation:** Real-world industrial availability logs presented severe data quality anomalies. The historical dataset lacked critical granularity regarding scheduled versus unscheduled maintenance, demand versus undemand operating hours, and historical repair types (which dictate whether equipment reliability and life expectancy were extended). Solving this required extensive programmatic data scrubbing in Pandas coupled with rigorous Subject Matter Expert (SME) validation to establish accurate equipment availability baselines.
+* **Memory & Vectorization Optimization:** Processing combinatorial failure arrays required replacing standard iterative loops with vectorized NumPy data structures. This optimization prevented memory bottlenecks and system crashes during execution.
 
 ## 🚀 Impact & Results
-The final architecture successfully deployed a highly efficient predictive model. By transforming raw, disconnected historical logs into a cohesive risk matrix, the tool allowed cross-functional stakeholders to visually quantify system vulnerabilities. 
+* **Defensible Reliability KPIs:** By translating abstract Demand-Capacity interference into concrete metrics—specifically calculating the expected shortfall days per season and cumulative deficit probabilities—the tool transformed vague operational anxieties into mathematically defensible reliability KPIs.
+* **Unlocking Commercial Capacity:** Traditional deterministic engineering models rely on static, "worst-case scenario" assumptions that artificially restrict network utilization. This probabilistic model proved that the actual tail-risk of concurrent multi-unit outages during peak demand was significantly lower than legacy deterministic assumptions dictated.
+* **Data-Driven Executive Decision-Making:** Armed with these stochastic forecasts, executive stakeholders were able to confidently rationalize and approve increased contract flow levels across a vast pipeline network supplying critical urban hubs (such as the Greater Toronto Area, Montreal, and Ottawa)—directly unlocking substantial commercial revenue while maintaining strict system reliability standards.
 
-Ultimately, this data pipeline shifted the organizational approach from reactive troubleshooting to proactive, algorithmically optimized maintenance scheduling.
+## 🗺️ Future Architectural Roadmap
+As a self-taught project developed to solve an immediate industrial need, the pipeline successfully delivered actionable executive insights. However, viewing the architecture through the lens of formal software and systems engineering highlights several key areas for future technical evolution:
+* **Object-Oriented Programming (OOP) Refactoring:** Transitioning the current modular script architecture into a unified, Object-Oriented software design. Encapsulating compressor units, distribution fitters, and simulation engines into distinct classes would significantly improve code cleanliness, maintainability, and extensibility.
+* **Automated Data Pipelines & Orchestration:** Automating manual hand-offs between the data cleaning, distribution fitting, and Monte Carlo simulation stages. Implementing data orchestration workflows (such as Apache Airflow or CI/CD pipelines) would transform the tool from a standalone script suite into an automated enterprise service.
+* **Computational Performance Optimization:** The current Monte Carlo simulation engine requires approximately 2 hours to execute full-scale simulation runs. Future iterations would explore multiprocessing, parallel computing, or migrating core mathematical calculations to optimized C++/Pybind11 backends to dramatically reduce computational runtime.
 
 ---
-*If you are a recruiter or engineering manager interested in discussing the system architecture, memory optimization techniques, or data pipelines used in this project, I would be happy to connect.*
+*If you are a recruiter or engineering manager interested in discussing the probabilistic modeling, systems architecture, or data pipelines used in this project, I would be happy to connect.*
 
 📫 **Let's Connect:** [www.linkedin.com/in/mark-y-cheung] | [mark.hwarang82@gmail.com]
