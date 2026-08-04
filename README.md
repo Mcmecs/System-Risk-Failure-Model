@@ -79,7 +79,7 @@ Additionally, this model served as a proof-of-concept for refining conventional 
 
 This Jupyter Notebook project served as a highly successful, interactive proof-of-concept for solving complex Demand-Capacity interference. 
 
-To see how I have since translated these core probabilistic concepts into a fully scalable, object-oriented software architecture, please view my follow-up independent project: [Link to Capacity Risk Pipeline Repo]. Built entirely from the ground up, it demonstrates the evolution from analytical scripts to a production-ready application.
+To see how I have since translated these core probabilistic concepts into a fully scalable, object-oriented software architecture, please view my follow-up independent project: [[Link to Capacity Risk Pipeline Repo](https://github.com/Mcmecs/capacity-shortfall-model.git)]. Built entirely from the ground up, it demonstrates the evolution from analytical scripts to a production-ready application.
 
 ---
 *If you are a recruiter or engineering manager interested in discussing the probabilistic modeling, systems architecture, or data pipelines used in this project, I would be happy to connect.*
