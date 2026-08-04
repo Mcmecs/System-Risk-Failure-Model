@@ -48,7 +48,7 @@ The tool was developed using sequential Python scripts within Jupyter Notebooks.
 * **NumPy** array operations were then applied to map joint event probabilities directly to their corresponding system capacity severity impacts.
 
 ### 2. Stochastic Distribution Fitting & Model Selection
-* Python scripts were developed to clean and fit continuous probability density functions (PDFs) to historical market demand datasets.
+* Python scripts were developed to clean and fit continuous PDFs to historical market demand datasets.
 * Hydraulically simulated flowrate results, representing the base capacity curve of the pipeline system generated via **Synergi Software**, were fitted with their own independent probability distributions.
 * Statistical goodness-of-fit testing was conducted using one of the methods: **Kolmogorov-Smirnov (KS) tests**, alongside **Akaike Information Criterion (AIC)** and **Bayesian Information Criterion (BIC)** in **SciPy** and **OpenTURNS**, to evaluate and select the optimal distributions.
 
@@ -67,13 +67,13 @@ The tool was developed using sequential Python scripts within Jupyter Notebooks.
 ## 🚧 Challenges Overcome
 
 * **Legacy Codebase Refactoring & Scope Expansion:** A major engineering challenge involved deciphering and refactoring a predecessor’s legacy codebase while significantly expanding the architectural scope from single-unit evaluations to complex, multi-unit concurrent failure modeling.
-* **Data Granularity & SME Validation:** Real-world industrial availability logs presented severe data quality anomalies. The historical dataset lacked critical granularity regarding scheduled versus unscheduled maintenance, demand versus undemand operating hours, and historical repair types (which dictate whether equipment reliability and life expectancy were extended). Solving this required extensive programmatic data scrubbing in Pandas coupled with rigorous Subject Matter Expert (SME) validation to establish accurate equipment availability baselines.
+* **Data Granularity & SME Validation:** Real-world industrial availability logs presented severe data quality anomalies. The historical dataset lacked critical granularity regarding scheduled versus unscheduled maintenance, demand versus undemand operating hours, and historical repair types (which dictate whether equipment reliability and life expectancy were extended). Solving this required extensive programmatic data scrubbing in Pandas coupled with rigorous SME validation to establish accurate equipment availability baselines.
 * **Memory & Vectorization Optimization:** Processing combinatorial failure arrays required replacing standard iterative loops with vectorized NumPy data structures. This optimization prevented memory bottlenecks and system crashes during execution.
 
 ## 🚀 Impact & Results
 
 Results from this project were presented to executive decision-makers, providing a new quantitative metric that was utilized to justify increasing contract levels. 
-Additionally, this model served as a proof-of-concept for refining conventional deterministic "worst-case scenario" planning. Unlike legacy static methods, this probabilistic framework successfully quantified actionable risk metrics—such as expected shortfall days per season—that were previously unavailable.
+Additionally, this model served as a proof-of-concept for refining conventional deterministic "worst-case scenario" planning. Unlike legacy static methods, this probabilistic framework successfully quantified actionable risk metrics, such as expected shortfall days per season, that were previously unavailable.
 
 ## ⏩ Evolution: The Capacity Risk Pipeline
 
