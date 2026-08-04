@@ -1,20 +1,20 @@
-# Probabilistic Risk Assessment Tool: A Technical Case Study
+# System Risk Model: A Technical Case Study
 
 > **Disclaimer:** The source code and datasets for this project are proprietary and confidential to a previous employer. This repository serves strictly as a technical whitepaper outlining the processes, challenges, and methodologies used to solve a complex computational problem.
 
 ## Table of Contents
 
-* [📊 Executive Summary](#executive-summary)
-* [🛠️ The Tech Stack](#the-tech-stack)
-* [⚙️ Project Approach](#project-approach)
+* [📊 Executive Summary](#-executive-summary)
+* [🛠️ The Tech Stack](#-the-tech-stack)
+* [⚙️ Project Approach](#-project-approach)
   * [1. Data Ingestion & Event Probability Mapping](#1-data-ingestion--event-probability-mapping)
   * [2. Stochastic Distribution Fitting & Model Selection](#2-stochastic-distribution-fitting--model-selection)
   * [3. Multivariate Dependency Modeling via Copulas](#3-multivariate-dependency-modeling-via-copulas)
   * [4. Monte Carlo Simulation Engine](#4-monte-carlo-simulation-engine)
   * [5. Risk Visualization & Executive Reporting](#5-risk-visualization--executive-reporting)
-* [🚧 Challenges Overcome](#challenges-overcome)
-* [🚀 Impact & Results](#impact--results)
-* [⏩ Evolution: The Capacity Risk Pipeline](#evolution-the-capacity-risk-pipeline)
+* [🚧 Challenges Overcome](#-challenges-overcome)
+* [🚀 Impact & Results](#-impact--results)
+* [⏩ Evolution: The Capacity Risk Pipeline](#-evolution-the-capacity-risk-pipeline)
 
 ## 📊 Executive Summary
 
