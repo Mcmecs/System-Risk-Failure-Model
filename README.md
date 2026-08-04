@@ -5,8 +5,8 @@
 ## Table of Contents
 
 * [📊 Executive Summary](#-executive-summary)
-* [🛠️ The Tech Stack](#%EF%B8%8F-the-tech-stack)
-* [⚙️ Project Approach](#%EF%B8%8F-project-approach)
+* [🔨 The Tech Stack](#-the-tech-stack)
+* [📓 Project Approach](#-project-approach)
   * [1. Data Ingestion & Event Probability Mapping](#1-data-ingestion--event-probability-mapping)
   * [2. Stochastic Distribution Fitting & Model Selection](#2-stochastic-distribution-fitting--model-selection)
   * [3. Multivariate Dependency Modeling via Copulas](#3-multivariate-dependency-modeling-via-copulas)
@@ -30,7 +30,7 @@ The project entailed the following core phases:
 
 The primary objective of this project was to quantify system shortfall risk over a specific duration (e.g., a season). This data was used to provide executive decision-makers with a nuanced, data-driven risk matrix to rationalize increased contract flow levels across a pipeline network.
 
-## 🛠️ The Tech Stack
+## 🔨 The Tech Stack
 
 * **Language:** Python
 * **Data Processing & Numerical Math:** Pandas, NumPy
@@ -38,7 +38,7 @@ The primary objective of this project was to quantify system shortfall risk over
 * **Data Visualization:** Matplotlib, Seaborn
 * **Domain:** Probabilistic Risk Analysis, Stochastic Modeling, Monte Carlo Simulations
 
-## ⚙️ Project Approach
+## 📓 Project Approach
 
 The tool was developed using sequential Python scripts within Jupyter Notebooks. This interactive format was chosen specifically to facilitate continuous data validation and allow for the manual testing of assumptions with Subject Matter Experts (SMEs) at each stage of the analysis.
 
