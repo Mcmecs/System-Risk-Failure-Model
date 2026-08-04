@@ -5,8 +5,8 @@
 ## Table of Contents
 
 * [📊 Executive Summary](#-executive-summary)
-* [🛠️ The Tech Stack](#-the-tech-stack)
-* [⚙️ Project Approach](#-project-approach)
+* [🛠️ The Tech Stack](#%EF%B8%8F-the-tech-stack)
+* [⚙️ Project Approach](#%EF%B8%8F-project-approach)
   * [1. Data Ingestion & Event Probability Mapping](#1-data-ingestion--event-probability-mapping)
   * [2. Stochastic Distribution Fitting & Model Selection](#2-stochastic-distribution-fitting--model-selection)
   * [3. Multivariate Dependency Modeling via Copulas](#3-multivariate-dependency-modeling-via-copulas)
